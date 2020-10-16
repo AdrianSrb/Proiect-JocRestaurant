@@ -1,0 +1,157 @@
+This document describes the requirements for the final project of Java 1 Associate module.
+
+
+Summary:
+The purpose of this project is to build from scratch an entertainment application (game), named “Tasty Foods”. The main idea of the game is to gather ingredients in order to cook different dishes.
+
+
+Premises:
+1.	A dish needs specific ingredients in order to be completed. E.g: in order to make a Chicken Pie, you need: 1 x flour, 2 x chicken;
+
+2.	The combination of ingredients and quantities represent the dish recipe;
+
+3.	The dishes can be categorized into normal dishes and special dishes. This information can be found in Table3;
+
+4.	A dish cannot be prepared without all necessary ingredients, nor with insufficient quantities;
+
+5.	Each Ingredient has a specific, predetermined ID. The required ID for each ingredient can be found in Table1;
+
+6.	A dish has only one recipe, as specified in Table2;
+
+7.	“Cooking a dish” means preparing a dish, and is only possible if all the ingredients exist in the required quantities. When a dish is being cooked, the quantities of the involved ingredients need to be updated accordingly.
+
+E.g:  Let’s assume the following ingredients exist: 3 x eggs, 3 x flour and 3 x chicken.
+I want to cook a chicken pie, which requires: 1 x flour and 2 x chicken.
+I can cook a chicken pie because I have the necessary ingredients (flour and chicken). After cooking the pie, I’m left with: 3 x eggs, 2 x flour and 1 x chicken
+
+8.	A special dish has a “validity time frame”. This validity time frame is a timeframe, during which the dish is valid and can be prepared. Outside of that timeframe, the preparation of a special dish is not possible;
+
+E.g: Vanilla Cake is a special dish and its validity time frame is between May 1st,10 AM and May 10th, 10 AM.
+a) Let’s say now is May 3rd. It’s possible for me to cook the dish right now if I have all the necessary ingredients, because the dish is valid;
+b) Let’s say now is May 20th. It’s not possible for me to cook the dish even though I have all the necessary ingredients, because the dish is not valid anymore (was valid until May 10th)
+
+9.	We say a dish is “Ready” if the dish is ready to be cooked - meaning all the required ingredients exist in the database in the necessary quantities;
+
+
+Technical requirements:
+
+1.	Create necessary classes in order to model ingredients, normal dishes and special dishes;
+
+2.	An Ingredient must have an ID. The required ID for each ingredient can be found in Table1;
+
+3.	Names of ingredients must be stored in an Enum;
+
+4.	Names of dishes must be stored in an Enum;
+
+5.	The recipe of the dish must be stored in a class named DishRecipe;
+
+6.	Ingredients along with the corresponding quantity must be stored in a class named IngredientDB;
+
+7.	Dishes along with their recipes must be stored in a class named DishDB;
+
+8.	All operations involving processing the collection of dishes should be performed in DishService class;
+
+9.	Create methods in IngredientDB, to implement the following operations: (2p)
+-	add an ingredient along with a specified quantity to the collection of existing ingredients (0.5p)
+-	return all the existing ingredients along with their quantity;  (0.5p)
+-	return the current quantity of a given ingredient, given the name of the ingredient; (0.5p)
+-	update the quantity of a given ingredient, given the name of the ingredient;(0.5p)
+
+10.	Create methods in DishDB, to implement the following operations: (4p)
+-	add a normal dish to the collection of existing dishes;  (1p)
+
+-	add a special dish to the collection of existing dishes. Both normal and special dishes should be kept into the same collection. When adding a special dish a validity time frame must be defined for it as well; (1p)
+
+-	set the recipe for a given dish, given the name of the dish. The given name should be a valid dish name, otherwise a InvalidDishException should be thrown;  (1p)
+
+-	return the recipe for a dish, given the name of the dish. The given name should be a valid dish name, otherwise a InvalidDishException should be thrown;  (1p)
+
+11.	Create methods in DishService to implement the following operations: (2p)
+-	cook a normal dish, given the name of the dish: (1p)
+obs1: In case the dish cannot be cooked due to lack of ingredients, a MissingIngredientsException must be thrown, by specifying the name of the ingredient, the current quantity and the required quantity in order to cook the dish.
+obs2: In case the cooking operation is performed with success, the ingredients database should be updated accordingly.
+obs3: The given name should be a valid normal dish name, otherwise a InvalidDishException should be thrown;
+
+-	cook a special dish, given the name of the dish: (1p)
+obs1: In case the dish cannot be cooked due to lack of ingredients, a MissingIngredientsException must be thrown, by specifying the name of the ingredient, the current quantity and the required quantity in order to cook the dish.
+obs2: In case the dish is not valid, an InvalidTimeFrameException should be thrown;
+obs3: In case the cooking operation is performed with success, the ingredients database should be updated accordingly.
+obs4: The given name should be a valid special special dish name, otherwise a InvalidSpecialDishException should be thrown;
+
+-	create an algorithm/method, that would choose which dish to cook from the collection, based on the weight of the dish. In Table4 are specified the weights of the dishes.
+The weight is similar to a probability - the higher the weight, the bigger the chances the dish is going to be chosen. However, a probability is a number between 0 -100% (i.e.: 70% probability) but the weight doesn’t have an upper limit. (1p)
+
+12.	All classes should be correctly encapsulated; (0.25p)
+13.	Names of the variables and methods should be meaningful and should follow the “camelcase” naming convention; (0.25p)
+14.	Code duplication is not allowed, common functionalities should be reused as much as possible; (0.25p)
+15.	The specified methods are not the only methods that can be created. They are the main methods as per requirements. Feel free to implement any other methods (and you should) in order to help you with your implementation. (0.25p)
+
+
+Good luck!
+Table 1. List of possible ingredients:
+
+ID	Name
+1	Flour
+2	Eggs
+3	Tomatoes
+4	Pasta
+5	Chicken
+6	Curry sauce
+7	Rice
+8	Salt
+9	Sugar
+10	Vanilla
+
+
+
+Table 2. List of possible dishes, along with their recipes:
+
+Dish name	Ingredient name 	Quantity
+Chicken Pie	    Flour	        1
+                Chicken	        2
+Vanilla Cake	Flour	        1
+                Sugar	        1
+                Eggs	        3
+                Vanilla	        1
+Pasta Arrabiata	Tomatoes	    2
+                Pasta	        1
+                Salt	        1
+Chicken Curry	Chicken	        1
+                Rice	        1
+                Curry Sauce	    2
+Fried Rice	    Rice	        1
+                Eggs	        3
+
+
+
+
+Table 3. Types of dishes:
+
+Dish name	Normal/Special
+Chicken Pie	    normal
+Vanilla Cake	special
+Pasta Arrabiata	normal
+Chicken Curry	special
+Fried Rice	    normal
+
+
+
+
+Table 4. Selection of dishes, based on weight:
+
+Dish name	    Weight
+Chicken Pie	    200
+Vanilla Cake	500
+Pasta Arrabiata	550
+Chicken Curry	350
+Fried RiceVa	600
+
+
+
+Please send the project at office@telacad.ro once you’re ready.
+Contact me on agnes.bolovan@gmail.com for questions.
+
+creion: 70% -> 0.7
+oglinda: 30% -> 0.3
+100% -> 1
+
